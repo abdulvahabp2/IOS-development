@@ -418,6 +418,7 @@
 				9624B50B1AD4079E008B6B53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9624B50C1AD4079E008B6B53 /* Build configuration list for PBXNativeTarget "salesToolAppTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +427,7 @@
 				9624B50E1AD4079E008B6B53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

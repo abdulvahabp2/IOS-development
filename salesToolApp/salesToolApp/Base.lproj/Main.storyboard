@@ -26,6 +26,7 @@
                                         <barButtonItem title="My Profile" id="ZsY-JS-rgV">
                                             <connections>
                                                 <action selector="showProfile:" destination="vXZ-lx-hvc" id="SgP-Am-Lpi"/>
+                                                <segue destination="vXZ-lx-hvc" kind="show" id="fEB-6r-pYk"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem style="plain" systemItem="flexibleSpace" id="yrG-FD-m63"/>
