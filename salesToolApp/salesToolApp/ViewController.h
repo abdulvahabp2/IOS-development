@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h> 
-#import "googleOAuth.h"
+#import "GoogleOAuth.h"
 
 
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GoogleOAuthDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrProfileInfo;
 @property (nonatomic, strong) NSMutableArray *arrProfileInfoLabel;
-@property (nonatomic, strong) googleOAuth *googleOAuth;
+@property (nonatomic, strong) GoogleOAuth *googleOAuth;
 @property (weak, nonatomic) IBOutlet UITableView *table;
 
 - (IBAction)showProfile:(id)sender;

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Position2. All rights reserved.
 //
 
-#import "googleOAuth.h"
+#import "GoogleOAuth.h"
 
-@implementation googleOAuth
+@implementation GoogleOAuth
 // The Client ID from the Google Developer Console .
 
 /*

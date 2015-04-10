@@ -26,6 +26,7 @@ typedef enum {
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData;
 -(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails;
 -(void)errorInResponseWithBody:(NSString *)errorMessage;
+
 @end
 
 @interface OAuth : UIWebView <UIWebViewDelegate, NSURLConnectionDataDelegate>
@@ -54,7 +55,7 @@ typedef enum {
 
 
 
-@interface googleOAuth : UIWebView <UIWebViewDelegate, NSURLConnectionDataDelegate>
+@interface GoogleOAuth : UIWebView <UIWebViewDelegate, NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) id<GoogleOAuthDelegate> gOAuthDelegate;
 

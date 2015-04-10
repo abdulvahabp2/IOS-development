@@ -14,7 +14,7 @@
 		9624B4F71AD4079E008B6B53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9624B4F61AD4079E008B6B53 /* Images.xcassets */; };
 		9624B4FA1AD4079E008B6B53 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9624B4F81AD4079E008B6B53 /* LaunchScreen.xib */; };
 		9624B5061AD4079E008B6B53 /* salesToolAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9624B5051AD4079E008B6B53 /* salesToolAppTests.m */; };
-		9624B5111AD4101E008B6B53 /* googleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 9624B5101AD4101E008B6B53 /* googleOAuth.m */; };
+		9624B5111AD4101E008B6B53 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 9624B5101AD4101E008B6B53 /* GoogleOAuth.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,8 +41,8 @@
 		9624B4FF1AD4079E008B6B53 /* salesToolAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = salesToolAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9624B5041AD4079E008B6B53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9624B5051AD4079E008B6B53 /* salesToolAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = salesToolAppTests.m; sourceTree = "<group>"; };
-		9624B50F1AD4101E008B6B53 /* googleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = googleOAuth.h; sourceTree = "<group>"; };
-		9624B5101AD4101E008B6B53 /* googleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = googleOAuth.m; sourceTree = "<group>"; };
+		9624B50F1AD4101E008B6B53 /* GoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleOAuth.h; sourceTree = "<group>"; };
+		9624B5101AD4101E008B6B53 /* GoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleOAuth.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,12 +88,12 @@
 				9624B4EE1AD4079E008B6B53 /* AppDelegate.m */,
 				9624B4F01AD4079E008B6B53 /* ViewController.h */,
 				9624B4F11AD4079E008B6B53 /* ViewController.m */,
+				9624B5101AD4101E008B6B53 /* GoogleOAuth.m */,
 				9624B4F31AD4079E008B6B53 /* Main.storyboard */,
+				9624B50F1AD4101E008B6B53 /* GoogleOAuth.h */,
 				9624B4F61AD4079E008B6B53 /* Images.xcassets */,
 				9624B4F81AD4079E008B6B53 /* LaunchScreen.xib */,
 				9624B4E91AD4079E008B6B53 /* Supporting Files */,
-				9624B50F1AD4101E008B6B53 /* googleOAuth.h */,
-				9624B5101AD4101E008B6B53 /* googleOAuth.m */,
 			);
 			path = salesToolApp;
 			sourceTree = "<group>";
@@ -226,7 +226,7 @@
 			files = (
 				9624B4F21AD4079E008B6B53 /* ViewController.m in Sources */,
 				9624B4EF1AD4079E008B6B53 /* AppDelegate.m in Sources */,
-				9624B5111AD4101E008B6B53 /* googleOAuth.m in Sources */,
+				9624B5111AD4101E008B6B53 /* GoogleOAuth.m in Sources */,
 				9624B4EC1AD4079E008B6B53 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

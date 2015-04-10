@@ -19,7 +19,7 @@
     _arrProfileInfo      = [[NSMutableArray alloc] init];
     _arrProfileInfoLabel = [[NSMutableArray alloc] init];
     
-    _googleOAuth = [[googleOAuth alloc] initWithFrame:self.view.frame];
+    _googleOAuth = [[GoogleOAuth alloc] initWithFrame:self.view.frame];
     [_googleOAuth setGOAuthDelegate:self];
     
     // Do any additional setup after loading the view, typically from a nib.
