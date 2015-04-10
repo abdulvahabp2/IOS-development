@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define authorizationTokenEndpoint @"https://accounts.google.com/o/oauth2/auth";
-#define accessTokenEndpoint        @"https://accounts.google.com/o/oauth2/token";
+
 
 
 typedef enum {
@@ -54,10 +53,14 @@ typedef enum {
 
 
 @interface googleOAuth : UIWebView <UIWebViewDelegate, NSURLConnectionDataDelegate>
+
 @property (nonatomic, strong) id<GoogleOAuthDelegate> gOAuthDelegate;
 
--(void)authorizeUserWithClienID:(NSString *)client_ID andClientSecret:(NSString *)client_Secret
-                  andParentView:(UIView *)parent_View andScopes:(NSArray *)scopes;
+
+
+
+#define authorizationTokenEndpoint @"https://accounts.google.com/o/oauth2/auth";
+#define accessTokenEndpoint        @"https://accounts.google.com/o/oauth2/token";
 
 // The client ID from the Google Developers Console.
 @property (nonatomic, strong) NSString *clientID;
@@ -89,6 +92,13 @@ typedef enum {
 
 // The parent view where the webview will be shown on.
 @property (nonatomic, strong) UIView *parentView;
+
 -(void)authorizeUserWithClienID:(NSString *)client_ID andClientSecret:(NSString *)client_Secret
                   andParentView:(UIView *)parent_View andScopes:(NSArray *)scopes;
+
+-(void)revokeAccessToken;
+
+-(void)callAPI:(NSString *)apiURL withHttpMethod:(HTTP_Method)httpMethod
+postParameterNames:(NSArray *)params postParameterValues:(NSArray *)values;
+
 @end

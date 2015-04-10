@@ -86,7 +86,7 @@
     }
     // Form the URL string.
     NSString *targetURLString = [NSString stringWithFormat:@"%@?scope=%@&amp;redirect_uri=%@&amp;client_id=%@&amp;response_type=code",
-                                 authorizationTokenEndpoint,
+                                 @"https://accounts.google.com/o/oauth2/auth",
                                  scope,
                                  _redirectUri,
                                  _clientID];
@@ -140,7 +140,7 @@
                             _redirectUri];
     
     // Create a mutable request object and set its properties.
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:accessTokenEndpoint]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: @"https://accounts.google.com/o/oauth2/token"]];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -226,6 +226,26 @@
         
         isAPIResponse = NO;
     }
+    // Check for invalid credentials.
+    // This checking is useful when an API is called without prior checking whether the
+    // access token is valid or not.
+    if ([responseJSON rangeOfString:@"Invalid Credentials"].location != NSNotFound ||
+        [responseJSON rangeOfString:@"401"].location != NSNotFound) {
+        [self refreshAccessToken];
+        
+        isAPIResponse = NO;
+    }
+    
+    
+    // This is the case where any other error message exists in the response.
+    if ([responseJSON rangeOfString:@"error"].location != NSNotFound) {
+        [self.gOAuthDelegate errorInResponseWithBody:responseJSON];
+        isAPIResponse = NO;
+    }
+    // If execution successfully arrives here then notify the caller class that a response was received.
+    if (isAPIResponse) {
+        [self.gOAuthDelegate responseFromServiceWasReceived:responseJSON andResponseJSONAsData:_receivedData];
+    }
 }
 
 -(void)refreshAccessToken{
@@ -245,7 +265,7 @@
     _isRefreshing = YES;
     
     // Create the request object and set its properties.
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:accessTokenEndpoint]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://accounts.google.com/o/oauth2/token"]];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[refreshPostParams dataUsingEncoding:NSUTF8StringEncoding]];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -377,4 +397,116 @@
     // Make the request.
     _urlConnection = [NSURLConnection connectionWithRequest:request delegate:self];
 }
+
+
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSLog(@"%ld", (long)[httpResponse statusCode]);
+}
+
+-(void)revokeAccessToken{
+    // Set the revoke URL string.
+    NSString *revokeURLString = [NSString stringWithFormat:@"https://accounts.google.com/o/oauth2/revoke?token=%@",
+                                 [_accessTokenInfoDictionary objectForKey:@"access_token"]
+                                 ];
+    // Create and make a request based on the URL string.
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:revokeURLString]];
+    [self makeRequest:request];
+    
+    // Now that the request for revoking the access in Google has been made,
+    // all local files regarding the access token should be removed as well.
+    NSError *error = nil;
+    // If the access token info file exists then delete it.
+    if ([self checkIfAccessTokenInfoFileExists]) {
+        [[NSFileManager defaultManager] removeItemAtPath:_accessTokenInfoFile error:&error];
+        
+        if (error != nil) {
+            // If an error occurs while removing the access token info file then notify the caller class through the
+            // next delegate method.
+            [self.gOAuthDelegate errorOccuredWithShortDescription:@"Unable to delete access token info file."
+                                                  andErrorDetails:[error localizedDescription]];
+        }
+    }
+    
+    // Check now if the refresh token file exists and then remove it.
+    if ([self checkIfRefreshTokenFileExists]) {
+        [[NSFileManager defaultManager] removeItemAtPath:_refreshTokenFile error:&error];
+        
+        if (error != nil) {
+            // In case of an error while removing the file then notify the caller class through the delegate method.
+            [self.gOAuthDelegate errorOccuredWithShortDescription:@"Unable to delete refresh token info file."
+                                                  andErrorDetails:[error localizedDescription]];
+        }
+    }
+    
+    
+    if (error == nil) {
+        // If no error occured during file removals then use the next delegate method
+        // to notify the caller class that the access has been revoked.
+        [self.gOAuthDelegate accessTokenWasRevoked];
+    }
+}
+
+-(void)callAPI:(NSString *)apiURL withHttpMethod:(HTTP_Method)httpMethod
+postParameterNames:(NSArray *)params
+postParameterValues:(NSArray *)values{
+    
+    // Check if the httpMethod value is valid.
+    // If not then notify for error.
+    if (httpMethod != httpMethod_GET && httpMethod != httpMethod_POST && httpMethod != httpMethod_DELETE && httpMethod != httpMethod_PUT) {
+        [self.gOAuthDelegate errorOccuredWithShortDescription:@"Invalid HTTP Method in API call" andErrorDetails:@""];
+    }
+    else{
+        // Create a string containing the API URL along with the access token.
+        NSString *urlString = [NSString stringWithFormat:@"%@?access_token=%@", apiURL, [_accessTokenInfoDictionary objectForKey:@"access_token"]];
+        // Create a mutable request.
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        
+        // Depending on the httpMethod value set the respective property of the request object.
+        switch (httpMethod) {
+            case httpMethod_GET:
+                [request setHTTPMethod:@"GET"];
+                break;
+            case httpMethod_POST:
+                [request setHTTPMethod:@"POST"];
+                break;
+            case httpMethod_DELETE:
+                [request setHTTPMethod:@"DELETE"];
+                break;
+            case httpMethod_PUT:
+                [request setHTTPMethod:@"PUT"];
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+        // In case of POST httpMethod value, set the parameters and any other necessary properties.
+        if (httpMethod == httpMethod_POST) {
+            // A string with the POST parameters should be built.
+            // Create an empty string.
+            NSString *postParams = @"";
+            // Iterrate through all parameters and append every POST parameter to the postParams string.
+            for (int i=0; i<[params count]; i++) {
+                postParams = [postParams stringByAppendingString:[NSString stringWithFormat:@"%@=%@",
+                                                                  [params objectAtIndex:i], [values objectAtIndex:i]]];
+                
+                // If the current parameter is not the last one then add the "&" symbol to separate post parameters.
+                if (i < [params count] - 1) {
+                    postParams = [postParams stringByAppendingString:@"&"];
+                }
+            }
+            
+            // Set any other necessary options.
+            [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
+            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        }
+        
+        
+        // Make the request.
+        [self makeRequest:request];
+    }
+}
+
 @end

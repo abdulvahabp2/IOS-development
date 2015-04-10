@@ -6,10 +6,19 @@
 //  Copyright (c) 2015 Position2. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <UIKit/UIKit.h> 
+#import "googleOAuth.h"
 
-@interface ViewController : UIViewController
 
+@interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GoogleOAuthDelegate>
 
+@property (nonatomic, strong) NSMutableArray *arrProfileInfo;
+@property (nonatomic, strong) NSMutableArray *arrProfileInfoLabel;
+@property (nonatomic, strong) googleOAuth *googleOAuth;
+@property (weak, nonatomic) IBOutlet UITableView *table;
+
+- (IBAction)showProfile:(id)sender;
+
+- (IBAction)revokeAccess:(id)sender;
 @end
 
