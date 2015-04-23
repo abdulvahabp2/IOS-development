@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8CE250B3-4481-48B6-894B-27B47A97DE91</string>
+	<key>IDESourceControlProjectName</key>
+	<string>TechnoGerms.com</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>23B73CE9AB1D113DF0509DD83E5EB9D31A8B4390</key>
+		<string>https://github.com/emysa341/Login-with-gmail-google-g--using-oath-2.0-protocol.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>TechnoGerms.com/TechnoGerms.com.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>23B73CE9AB1D113DF0509DD83E5EB9D31A8B4390</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/emysa341/Login-with-gmail-google-g--using-oath-2.0-protocol.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>23B73CE9AB1D113DF0509DD83E5EB9D31A8B4390</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>23B73CE9AB1D113DF0509DD83E5EB9D31A8B4390</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Login-with-gmail-google-g--using-oath-2.0-protocol</string>
+		</dict>
+	</array>
+</dict>
+</plist>
