@@ -25,8 +25,7 @@
                                     <items>
                                         <barButtonItem title="My Profile" id="ZsY-JS-rgV">
                                             <connections>
-                                                <action selector="showProfile:" destination="vXZ-lx-hvc" id="SgP-Am-Lpi"/>
-                                                <segue destination="vXZ-lx-hvc" kind="show" id="fEB-6r-pYk"/>
+                                                <action selector="showProfile:" destination="vXZ-lx-hvc" id="A9I-id-yHG"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem style="plain" systemItem="flexibleSpace" id="yrG-FD-m63"/>
@@ -37,6 +36,10 @@
                                         </barButtonItem>
                                     </items>
                                 </toolbar>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="Ccv-Gs-9va"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="cZP-gl-wjM"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

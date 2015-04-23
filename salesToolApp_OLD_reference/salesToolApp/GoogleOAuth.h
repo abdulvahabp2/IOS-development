@@ -61,9 +61,7 @@ typedef enum {
 
 
 
-
-#define authorizationTokenEndpoint @"https://accounts.google.com/o/oauth2/auth";
-#define accessTokenEndpoint        @"https://accounts.google.com/o/oauth2/token";
+//#define accessTokenEndpoint        @"https://accounts.google.com/o/oauth2/token";
 
 // The client ID from the Google Developers Console.
 @property (nonatomic, strong) NSString *clientID;
@@ -96,7 +94,7 @@ typedef enum {
 // The parent view where the webview will be shown on.
 @property (nonatomic, strong) UIView *parentView;
 
--(void)authorizeUserWithClienID:(NSString *)client_ID andClientSecret:(NSString *)client_Secret
+-(void)authorizeUserWithClientID:(NSString *)client_ID andClientSecret:(NSString *)client_Secret
                   andParentView:(UIView *)parent_View andScopes:(NSArray *)scopes;
 
 -(void)revokeAccessToken;

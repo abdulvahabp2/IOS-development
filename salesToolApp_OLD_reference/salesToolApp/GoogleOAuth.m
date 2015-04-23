@@ -8,6 +8,9 @@
 
 #import "GoogleOAuth.h"
 
+
+
+
 @implementation GoogleOAuth
 // The Client ID from the Google Developer Console .
 
@@ -43,14 +46,15 @@
     return self;
 }
 
--(void)authorizeUserWithClientID:(NSString *)client_ID andCleintSecret:(NSString *)client_Secret andParentView:(UIView *)parent_view andScopes:(NSArray *)scopes{
+-(void)authorizeUserWithClientID:(NSString *)client_ID andClientSecret:(NSString *)client_Secret
+                   andParentView:(UIView *)parent_View andScopes:(NSArray *)scopes{
     
     // store into the local private properties all the parameter
     
     _clientID        = [[NSString alloc] initWithString:client_ID];
     _clientSecret    = [[NSString alloc] initWithString:client_Secret];
     _scopes          = [[NSMutableArray alloc] initWithArray:scopes copyItems:YES];
-    _parentView      = parent_view;
+    _parentView      = parent_View;
     
     
     // Check if the access token info file exists or not.
@@ -84,9 +88,12 @@
             scope = [scope stringByAppendingString:@"+"];
         }
     }
+    NSString const *authorizationTokenEndpoint = @"https://accounts.google.com/o/oauth2/auth";
+    NSString const *accessTokenEndpoint       = @"https://accounts.google.com/o/oauth2/token";
+
     // Form the URL string.
     NSString *targetURLString = [NSString stringWithFormat:@"%@?scope=%@&amp;redirect_uri=%@&amp;client_id=%@&amp;response_type=code",
-                                 @"https://accounts.google.com/o/oauth2/auth",
+                                 accessTokenEndpoint,
                                  scope,
                                  _redirectUri,
                                  _clientID];

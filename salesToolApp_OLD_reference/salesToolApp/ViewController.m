@@ -14,8 +14,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_table setDelegate:self];
-    [_table setDataSource:self];
+//    [_table setDelegate:self];
+//    [_table setDataSource:self];
     _arrProfileInfo      = [[NSMutableArray alloc] init];
     _arrProfileInfoLabel = [[NSMutableArray alloc] init];
     
@@ -32,20 +32,22 @@
 
 - (IBAction)showProfile:(id)sender {
     
-    [_googleOAuth authorizeUserWithClienID:@"241458702044-qltkq7q5jovgg29ipegqr1bpeik53akj.apps.googleusercontent.com"
-                           andClientSecret:@"BFDYx00rhuBAGaV5W5cV9rvw"
-                             andParentView:self.view
-                                 andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile", nil]
-     ];
+    [_googleOAuth authorizeUserWithClientID:@"2241458702044-qltkq7q5jovgg29ipegqr1bpeik53akj.apps.googleusercontent.com"
+                            andClientSecret:@"BFDYx00rhuBAGaV5W5cV9rvw"
+                            andParentView:self.view
+                            andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile", nil]];
+
 }
 
 - (IBAction)revokeAccess:(id)sender {
     [_googleOAuth revokeAccessToken];
 }
 
+#pragma mark GOOGLE AUTH METHODS
+
 -(void)authorizationWasSuccessful{
     [_googleOAuth callAPI:@"https://www.googleapis.com/oauth2/v1/userinfo"
-           withHttpMethod:httpMethod_GET
+      withHttpMethod:httpMethod_GET
        postParameterNames:nil postParameterValues:nil];
 }
 -(void)accessTokenWasRevoked{
@@ -69,47 +71,6 @@
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     NSLog(@"%@", errorMessage);
 }
-
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [_arrProfileInfo count];
-}
-
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: CellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
-        
-        [[cell textLabel] setFont:[UIFont fontWithName:@"Trebuchet MS" size:15.0]];
-        [[cell textLabel] setShadowOffset:CGSizeMake(1.0, 1.0)];
-        [[cell textLabel] setShadowColor:[UIColor whiteColor]];
-        
-        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"Trebuchet MS" size:13.0]];
-        [[cell detailTextLabel] setTextColor:[UIColor grayColor]];
-    }
-    
-    [[cell textLabel] setText:[_arrProfileInfo objectAtIndex:[indexPath row]]];
-    [[cell detailTextLabel] setText:[_arrProfileInfoLabel objectAtIndex:[indexPath row]]];
-    
-    return cell;
-}
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60.0;
-}
-
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
     if ([responseJSONAsString rangeOfString:@"family_name"].location != NSNotFound) {
@@ -137,4 +98,47 @@
         }
     }
 }
+
+#pragma mark TABLE DELEGATE METHODS
+//-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+//    return 1;
+//}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [_arrProfileInfo count];
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: CellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        
+//        cell.textLabel.font = [UIFont fontWithName:@"Trebuchet MS" size:15.0];
+        [[cell textLabel] setFont:[UIFont fontWithName:@"Trebuchet MS" size:15.0]];
+        [[cell textLabel] setShadowOffset:CGSizeMake(1.0, 1.0)];
+        [[cell textLabel] setShadowColor:[UIColor whiteColor]];
+        
+        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"Trebuchet MS" size:13.0]];
+        [[cell detailTextLabel] setTextColor:[UIColor grayColor]];
+    }
+    
+    [[cell textLabel] setText:[_arrProfileInfo objectAtIndex:indexPath.row]];
+    [[cell detailTextLabel] setText:[_arrProfileInfoLabel objectAtIndex:[indexPath row]]];
+    
+    return cell;
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 60.0;
+}
+
+
 @end
